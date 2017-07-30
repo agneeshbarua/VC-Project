@@ -1,0 +1,57 @@
+
+
+```{r}
+library(phytools)
+library(ape)
+library(MCMCglmm)
+
+snphylo = read.nexus("./Trees/MinSnake_tree_u.nex")
+plot(snphylo)
+is.ultrametric(snphylo)
+
+phydata = read.csv("./Data/snakedata.csv", header = TRUE)
+head(phydata)
+
+inv.phylo = inverseA(snphylo, nodes = "TIPS", scale =TRUE)
+
+```
+
+TODO: Run for all toxins
+```{r mcmc message=FALSE}
+priors1 <- list(G=list(G1=list(V=1, nu=0.002)), R=list(V=diag(3), nu= 0.002)) # standard prior
+cov_model<-MCMCglmm(cbind(SVMP,PLA2,TFTx) ~ cm, 
+                       random = ~species,
+                       rcov = ~us(trait):units,
+                  family=rep("gaussian",3), 
+                  ginverse=list(species=inv.phylo$Ainv), 
+                  prior=priors1,
+                  data=phydata, 
+                  nitt=50000, burnin=500,thin=200)
+```
+
+I am expanding the estimation of lambda to the multivariate case. This tells us how much phylogeny affects each toxin.
+TODO: rewrite as a loop, and calculate lambda for all toxins.
+TODO: how to get cofficient of cm for every toxin?
+```{r}
+summary(cov_model)
+plot(cov_model)
+lambda.PLA2 <- cov_model$VCV[,'species']/(cov_model$VCV[,'species']+cov_model$VCV[,'traitPLA2:traitPLA2.units'])
+posterior.mode(lambda.PLA2)
+HPDinterval(lambda.PLA2)
+
+lambda.TFTx <- cov_model$VCV[,'species']/(cov_model$VCV[,'species']+cov_model$VCV[,'traitTFTx:traitTFTx.units'])
+posterior.mode(lambda.TFTx)
+HPDinterval(lambda.TFTx)
+
+```
+
+
+Notes
+[MCMCGlmm course notes](https://cran.r-project.org/web/packages/MCMCglmm/vignettes/CourseNotes.pdf)
+http://grokbase.com/t/r/r-sig-phylo/1382dqfaqr/wg-re-aw-re-mcmcglmm-for-categorical-data-with-more-than-2-levels-prior-specification
+
+[Acnestral state reconstruction](http://onlinelibrary.wiley.com/store/10.1111/2041-210X.12354/asset/supinfo/mee312354-sup-0003-AppendixS3.pdf?v=1&s=58d260cb8c9b14812b164806c5f0a9af68af2b23
+)
+[Interpreting rcov (case of PCA)](https://stat.ethz.ch/pipermail/r-sig-mixed-models/2011q3/016765.html)
+
+[R and G structures](https://stats.stackexchange.com/questions/32994/what-are-r-structure-g-structure-in-a-glmm)
