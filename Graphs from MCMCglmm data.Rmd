@@ -1,0 +1,60 @@
+---
+title: "Graphs for MCMCglmm data"
+author: "Agneesh Barua"
+date: "31/07/2017"
+output: html_document
+---
+
+```{r}
+library(reshape2)
+library(ggplot2)
+
+#All data
+ sndata = read.csv("snakedata.csv", row.names = 1)
+ sndata$cm = NULL
+ 
+ 
+sndata = as.matrix.data.frame(sndata)
+
+cvm = cov(sndata)
+cvm
+
+cvm<-melt(cvm)
+
+cvm= cvm[cvm$value!=0,]
+
+ggplot(cvm, aes(x = Var2, y = Var1)) + 
+  geom_raster(aes(fill=value)) + 
+  scale_fill_gradient(low="grey90", high="red") +
+  labs(x="Components", y="Components", title="Covariance between venom components") +
+  theme_bw() + theme(axis.text.x=element_text(size=9, angle=0, vjust=0.3),
+                     axis.text.y=element_text(size=9),
+                     plot.title=element_text(size=11))
+```
+
+
+```{r}
+#The data from MCMCglmm
+
+data = read.csv("lambda and CI.csv")
+data
+
+long = data
+long
+
+
+sel = long$lower
+seu = long$upper
+sz = long$Mean
+
+ggplot(long, aes(x =Component, y= Mean)) +
+  geom_point(position=position_dodge(0.1), size=2.5, shape=21, fill="red")+
+xlab("Component") +
+ylab("Mean")+
+ggtitle("Covariance mean of different venom components with CI(95%)")+
+  expand_limits(y=0)+
+scale_y_continuous(breaks = 0:20*0.1)+
+geom_errorbar(aes(ymin=sel, ymax=seu), colour="black", width= .1, position = position_dodge(0.1))
+
+```
+
