@@ -105,5 +105,25 @@ ggplot(cvm, aes(x = Var2, y = Var1)) +
                      axis.text.y=element_text(size=9),
                      plot.title=element_text(size=11))
 
+data = read.csv("lambda and CI.csv")
+data$CI=NULL
+
+long = data
+long
+
+
+sel = long$lower
+seu = long$upper
+sz = long$Mean
+
+ggplot(long, aes(x =Component, y= Mean)) +
+  geom_point(position=position_dodge(0.1), size=3, shape=21, fill="red")+
+  xlab("Component") +
+  ylab("Mean")+
+  ggtitle("Covariance mean of different venom components with CI(95%)")+
+  expand_limits(y=0)+
+  scale_y_continuous(breaks = 0:20*0.1)+
+  geom_errorbar(aes(ymin=sel, ymax=seu), colour="black", width= .1, position = position_dodge(0.1))
+
 
 
