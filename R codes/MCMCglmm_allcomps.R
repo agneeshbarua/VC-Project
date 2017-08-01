@@ -97,13 +97,19 @@ cvm<-melt(cvm)
 
 cvm= cvm[cvm$value!=0,]
 
-ggplot(cvm, aes(x = Var2, y = Var1)) + 
-  geom_raster(aes(fill=value)) + 
-  scale_fill_gradient2(low=("orangered"), mid = "white", high=("orangered4"), midpoint = 0, space = "Lab", guide = "colourbar") +
+bl <- colorRampPalette(c("navy","royalblue","lightskyblue"))(200)                      
+re <- colorRampPalette(c("mistyrose", "red2","darkred"))(200)
+
+
+ggplot(cvm, aes(x = Var2, y = Var1, fill = value)) + 
+  geom_tile() + 
+  scale_fill_gradientn(colours=c(bl,"white", re), na.value = "grey98",
+limits = c(-0.3, 0.3))  +
   labs(x="Components", y="Components", title="Covariance between venom components") +
   theme_bw() + theme(axis.text.x=element_text(size=9, angle=0, vjust=0.3),
                      axis.text.y=element_text(size=9),
                      plot.title=element_text(size=11))
+
 
 data = read.csv("lambda and CI.csv")
 data$CI=NULL
