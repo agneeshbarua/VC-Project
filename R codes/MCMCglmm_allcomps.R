@@ -77,6 +77,33 @@ mean(lambda.SVSP)
 posterior.mode(lambda.SVSP)
 HPDinterval(lambda.SVSP)
 
+q=matrix(summary(cov_model)$Rcovariances[,1],10,10)
+
+
+rownames(q) =c("TFTx","BPP","CRISP","CTL","GF", "OHA","LAAO","PLA2","SVMP","SVSP")
+colnames(q) =c("TFTx","BPP","CRISP","CTL","GF", "OHA","LAAO","PLA2","SVMP","SVSP")
+
+
+q
+
+cvm = cov(q)
+cvm
+
+
+library(reshape2)
+library(ggplot2)
+
+cvm<-melt(cvm)
+
+cvm= cvm[cvm$value!=0,]
+
+ggplot(cvm, aes(x = Var2, y = Var1)) + 
+  geom_raster(aes(fill=value)) + 
+  scale_fill_gradient2(low=("orangered"), mid = "white", high=("orangered4"), midpoint = 0, space = "Lab", guide = "colourbar") +
+  labs(x="Components", y="Components", title="Covariance between venom components") +
+  theme_bw() + theme(axis.text.x=element_text(size=9, angle=0, vjust=0.3),
+                     axis.text.y=element_text(size=9),
+                     plot.title=element_text(size=11))
 
 
 
