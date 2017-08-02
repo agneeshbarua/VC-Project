@@ -18,9 +18,9 @@ inv.phylo = inverseA(snphylo, nodes = "TIPS", scale =TRUE)
 
 TODO: Run for all toxins
 ```{r mcmc message=FALSE}
-priors1 <- list(G=list(G1=list(V=1, nu=0.002)), R=list(V=diag(3), nu= 0.002)) # standard prior
+priors1 <- list(G=list(G1=list(V=diag(3), nu=0.002)), R=list(V=diag(3), nu= 0.002)) # standard prior
 cov_model<-MCMCglmm(cbind(SVMP,PLA2,TFTx) ~ cm, 
-                       random = ~species,
+                       random = ~us(trait):species,
                        rcov = ~us(trait):units,
                   family=rep("gaussian",3), 
                   ginverse=list(species=inv.phylo$Ainv), 
