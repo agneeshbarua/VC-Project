@@ -18,15 +18,17 @@ inv.phylo = inverseA(snphylo, nodes = "TIPS", scale =TRUE)
 
 TODO: Run for all toxins
 ```{r mcmc message=FALSE}
-priors1 <- list(G=list(G1=list(V=diag(3), nu=0.002)), R=list(V=diag(3), nu= 0.002)) # standard prior
-cov_model<-MCMCglmm(cbind(SVMP,PLA2,TFTx) ~ cm, 
+priors1 <- list(G=list(G1=list(V=diag(10), nu=0.002)), R=list(V=diag(10), nu= 0.002)) # standard prior
+ptm <- proc.time()
+cov_model<-MCMCglmm(cbind(TFTx,BPP,CRISP,CTL,GF,OHA,LAAO,PLA2,SVMP,SVSP) ~ cm, 
                        random = ~us(trait):species,
                        rcov = ~us(trait):units,
-                  family=rep("gaussian",3), 
+                  family=rep("gaussian",10), 
                   ginverse=list(species=inv.phylo$Ainv), 
                   prior=priors1,
                   data=phydata, 
                   nitt=50000, burnin=500,thin=200)
+proc.time() - ptm
 ```
 
 I am expanding the estimation of lambda to the multivariate case. This tells us how much phylogeny affects each toxin.
@@ -43,6 +45,14 @@ lambda.TFTx <- cov_model$VCV[,'species']/(cov_model$VCV[,'species']+cov_model$VC
 posterior.mode(lambda.TFTx)
 HPDinterval(lambda.TFTx)
 
+```
+
+Reducing the variance
+```{r}
+Gcov <- matrix(summary(cov_model)$Gcovariances,10,10)
+colnames(Gcov) <- rownames(Gcov) <- colnames(phydata)[2:11]
+Gcov.pca <- princomp(covmat=Gcov)
+Gcov.pca.loadings <- loadings(Gcov.pca)
 ```
 
 
