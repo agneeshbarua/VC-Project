@@ -4,19 +4,26 @@
 library(phytools)
 library(ape)
 library(MCMCglmm)
+library(reshape2) #next three libraries for plotting PCA
+library(ggrepel)
+library(scatterpie)
 
 snphylo = read.nexus("./Trees/MinSnake_tree_u.nex")
 plot(snphylo)
 is.ultrametric(snphylo)
 
 phydata = read.csv("./Data/snakedata.csv", header = TRUE)
+row.names(phydata) <- phydata$species
 head(phydata)
 
+#normalize libraries 
+phydata.norm <- phydata
+phydata.norm[,2:11] <- t(scale(t(phydata.norm[,2:11])))
 inv.phylo = inverseA(snphylo, nodes = "TIPS", scale =TRUE)
 
 ```
 
-TODO: Run for all toxins
+
 ```{r mcmc message=FALSE}
 priors1 <- list(G=list(G1=list(V=diag(10), nu=0.002)), R=list(V=diag(10), nu= 0.002)) # standard prior
 ptm <- proc.time()
@@ -26,14 +33,18 @@ cov_model<-MCMCglmm(cbind(TFTx,BPP,CRISP,CTL,GF,OHA,LAAO,PLA2,SVMP,SVSP) ~ cm,
                   family=rep("gaussian",10), 
                   ginverse=list(species=inv.phylo$Ainv), 
                   prior=priors1,
-                  data=phydata, 
-                  nitt=50000, burnin=500,thin=200)
+                  data=phydata.norm[,1:12], 
+                  nitt=200000, burnin=500, thin=200, pr = TRUE)
 proc.time() - ptm
+saveRDS(cov_model, "Data/cov_model_scaled.rds")
+```
+
+```{r}
+cov_model <- readRDS("Data/cov_model_scaled.rds")
 ```
 
 I am expanding the estimation of lambda to the multivariate case. This tells us how much phylogeny affects each toxin.
-TODO: rewrite as a loop, and calculate lambda for all toxins.
-TODO: how to get cofficient of cm for every toxin?
+
 ```{r}
 summary(cov_model)
 plot(cov_model)
@@ -47,13 +58,56 @@ HPDinterval(lambda.TFTx)
 
 ```
 
-Reducing the variance
-```{r}
-Gcov <- matrix(summary(cov_model)$Gcovariances,10,10)
-colnames(Gcov) <- rownames(Gcov) <- colnames(phydata)[2:11]
-Gcov.pca <- princomp(covmat=Gcov)
-Gcov.pca.loadings <- loadings(Gcov.pca)
+
+Reference: https://strata.uga.edu/software/pdf/pcaTutorial.pdf
+```{r pca_by_hand}
+Eig <- eigen(matrix(summary(cov_model)$Gcovariances,10,10))
+evectors <- Eig$vectors
+rownames(evectors) <- colnames(phydata)[2:11]
+print(round(Eig$values/sum(Eig$values) * 100, digits = 2))
+print(round(cumsum(Eig$values)/sum(Eig$values) * 100, digits = 2))
+
+scores <- as.matrix(phydata.norm[,2:11]) %*% evectors # calculating scores from eigenanalysis results
+
+correlations <- cor(scores, phydata.norm[,2:11])
+
+quartz(height=7, width=7)
+plot(scores[,1], scores[,2], xlab="PCA 1", ylab="PCA 2",
+ type="n", xlim=c(min(scores[,1:2]), max(scores[,1:2])),
+ ylim=c(min(scores[,1:2]), max(scores[,1:2])))
+arrows(0,0,evectors[,1],evectors[,2], length=0.1,
+ angle=20, col="red")
+text(evectors[,1]*1.2,evectors[,2]*1.2,
+ rownames(evectors), col="red", cex=0.7)
+ text(scores[,1],scores[,2], rownames(scores), col="blue",
+ cex=0.7)
+
+quartz(height=7, width=7)
+plot(scores[,2], scores[,3], xlab="PCA 2", ylab="PCA 3",
+ type="n", xlim=c(min(scores[,2:3]), max(scores[,2:3])),
+ ylim=c(min(scores[,2:3]), max(scores[,2:3])))
+arrows(0,0,evectors[,2],evectors[,3], length=0.1,
+ angle=20, col="red")
+text(evectors[,2]*1.2,evectors[,3]*1.2,
+ rownames(evectors), col="red", cex=0.7)
+ text(scores[,2],scores[,3], rownames(scores), col="blue",
+ cex=0.7)
 ```
+
+
+# Plot PCA with venom and 
+
+```{r}
+plotData <- phydata[,c("PLA2","SVMP","SVSP","TFTx","family","subfamily","species")]
+plotData$PCA1 <- scores[,1]
+plotData$PCA2 <- scores[,2]
+plotData$shortname <- gsub("([A-Z]).*_([a-z]).*", "\\1\\2", plotData$species)
+
+
+ggplot(plotData,aes(PCA1, PCA2, label=shortname, color=family)) +scale_color_manual(values=c("red","green","blue")) + geom_scatterpie(aes(x=PCA1, y=PCA2), data=plotData, cols=c("PLA2","SVMP","SVSP","TFTx"))+scale_fill_manual(values=c("cyan","purple","orange","grey"))+theme_bw()+geom_label_repel()
+ggsave("plots/pca.pdf",height=5,width=6)
+
+````
 
 
 Notes
@@ -65,3 +119,5 @@ http://grokbase.com/t/r/r-sig-phylo/1382dqfaqr/wg-re-aw-re-mcmcglmm-for-categori
 [Interpreting rcov (case of PCA)](https://stat.ethz.ch/pipermail/r-sig-mixed-models/2011q3/016765.html)
 
 [R and G structures](https://stats.stackexchange.com/questions/32994/what-are-r-structure-g-structure-in-a-glmm)
+
+[Diagnostics, etc.](https://ms.mcmaster.ca/~bolker/R/misc/foxchapter/bolker_chap.html)
