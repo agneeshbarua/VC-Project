@@ -1,8 +1,8 @@
-#NEXUS
-[R-package APE, Fri Jul 28 09:54:45 2017]
+a#NEXUS
+[R-package APE, Mon Aug 14 16:35:52 2017]
 
 BEGIN TAXA;
-	DIMENSIONS NTAX = 43;
+	DIMENSIONS NTAX = 45;
 	TAXLABELS
 		Echis_carinatus
 		Echis_ocellatus
@@ -11,6 +11,8 @@ BEGIN TAXA;
 		Bitis_gabonica
 		Ovophis_okinavensis
 		Gloydius_intermedius
+		Protobothrops_mucrosquamatus
+		Protobothrops_elegans
 		Protobothrops_flavoviridis
 		Cerrophidion_godmani
 		Bothrops_alternatus
@@ -58,42 +60,44 @@ BEGIN TREES;
 		5	Bitis_gabonica,
 		6	Ovophis_okinavensis,
 		7	Gloydius_intermedius,
-		8	Protobothrops_flavoviridis,
-		9	Cerrophidion_godmani,
-		10	Bothrops_alternatus,
-		11	Bothrops_neuwiedi,
-		12	Bothrops_jararaca,
-		13	Bothrops_insularis,
-		14	Bothrops_jararacussu,
-		15	Bothrops_asper,
-		16	Bothrops_colombiensis,
-		17	Bothrops_atrox,
-		18	Bothriechis_schlegelii,
-		19	Bothriechis_lateralis,
-		20	Agkistrodon_piscivorus,
-		21	Sistrurus_catenatus,
-		22	Crotalus_horridus,
-		23	Crotalus_simus,
-		24	Crotalus_durissus,
-		25	Crotalus_adamanteus,
-		26	Micrurus_corallinus,
-		27	Micrurus_fulvius,
-		28	Micrurus_surinamensis,
-		29	Micrurus_lemniscatus,
-		30	Micrurus_altirostris,
-		31	Micrurus_spixii,
-		32	Naja_kaouthia,
-		33	Naja_atra,
-		34	Bungarus_multicinctus,
-		35	Drysdalia_coronoides,
-		36	Dispholidus_typus,
-		37	Boiga_irregularis,
-		38	Opheodrys_aestivus,
-		39	Pantherophis_guttatus,
-		40	Hypsiglena_torquata,
-		41	Thamnodynastes_strigatus,
-		42	Phalotris_mertensi,
-		43	Philodryas_olfersii
+		8	Protobothrops_mucrosquamatus,
+		9	Protobothrops_elegans,
+		10	Protobothrops_flavoviridis,
+		11	Cerrophidion_godmani,
+		12	Bothrops_alternatus,
+		13	Bothrops_neuwiedi,
+		14	Bothrops_jararaca,
+		15	Bothrops_insularis,
+		16	Bothrops_jararacussu,
+		17	Bothrops_asper,
+		18	Bothrops_colombiensis,
+		19	Bothrops_atrox,
+		20	Bothriechis_schlegelii,
+		21	Bothriechis_lateralis,
+		22	Agkistrodon_piscivorus,
+		23	Sistrurus_catenatus,
+		24	Crotalus_horridus,
+		25	Crotalus_simus,
+		26	Crotalus_durissus,
+		27	Crotalus_adamanteus,
+		28	Micrurus_corallinus,
+		29	Micrurus_fulvius,
+		30	Micrurus_surinamensis,
+		31	Micrurus_lemniscatus,
+		32	Micrurus_altirostris,
+		33	Micrurus_spixii,
+		34	Naja_kaouthia,
+		35	Naja_atra,
+		36	Bungarus_multicinctus,
+		37	Drysdalia_coronoides,
+		38	Dispholidus_typus,
+		39	Boiga_irregularis,
+		40	Opheodrys_aestivus,
+		41	Pantherophis_guttatus,
+		42	Hypsiglena_torquata,
+		43	Thamnodynastes_strigatus,
+		44	Phalotris_mertensi,
+		45	Philodryas_olfersii
 	;
-	TREE * UNTITLED = [&R] ((((1:18.815531,(2:17.54818,(3:15.40394,4:15.40394)inode3162:2.14424)inode3160:1.267351)inode3159:16.06306975,5:34.87860075)inode3151:7.94799975,(((6:19.963025,7:19.963025)inode3219:3.486875,8:23.4499)inode3218:1.072903471,((9:21.06927288,(10:13.61107814,((11:9.23425125,(12:2.6234845,13:2.6234845)inode3272:6.61076675)inode3269:3.249693042,(14:9.572171167,(15:4.9107205,(16:2.787269,17:2.787269)inode3280:2.1234515)inode3279:4.661450667)inode3274:2.911773125)inode3264:1.127133851)inode3259:7.458194732)inode3242:1.284302056,((18:17.16207,19:17.16207)inode3290:4.595858167,(20:20.8412178,(21:16.19810162,((22:12.4090205,(23:2.341081,24:2.341081)inode3319:10.0679395)inode3316:0.3801963333,25:12.78921683)inode3315:3.408884792)inode3301:4.643116175)inode3297:0.9167103667)inode3284:0.5956467639)inode3241:2.16922854)inode3217:18.30379703)inode3123:18.53359052,((((26:8.848591,27:8.848591)inode3496:13.89903962,((28:11.74999,29:11.74999)inode3502:4.95866425,(30:4.9005015,31:4.9005015)inode3509:11.80815275)inode3501:6.038976375)inode3495:13.61265938,((32:6.146785,33:6.146785)inode3525:29.3189585,(34:34.49836,35:34.49836)inode3538:0.9673835)inode3513:0.8945465)inode3490:16.60771836,((36:34.89201683,(37:33.3075375,(38:32.30548,39:32.30548)inode3769:1.0020575)inode3732:1.584479333)inode3714:13.79318079,(40:37.46583,(41:34.6545445,(42:31.03814,43:31.03814)inode4086:3.6164045)inode4032:2.8112855)inode3970:11.21936762)inode3631:4.282810738)inode3351:8.392182655)inode3122;
+	TREE * UNTITLED = [&R] ((((1:18.815533,(2:17.548181,(3:15.403941,4:15.403941)inode3162:2.14424)inode3160:1.267352)inode3159:16.063072,5:34.878605)inode3151:7.947996,(((6:19.963027,7:19.963027)inode3219:3.486875,((8:6.430693,9:6.430693)inode3239:4.306074,10:10.736767)inode3238:12.713135)inode3218:1.072903,((11:21.069276,(12:13.611077,((13:9.234252,(14:2.623485,15:2.623485)inode3272:6.610767)inode3269:3.249693,(16:9.572172,(17:4.910721,(18:2.78727,19:2.78727)inode3280:2.123451)inode3279:4.661451)inode3274:2.911773)inode3264:1.127132)inode3259:7.458199)inode3242:1.2843,((20:17.16207,21:17.16207)inode3290:4.595859,(22:20.841218,(23:16.198105,((24:12.409024,(25:2.341081,26:2.341081)inode3319:10.067943)inode3316:0.380193,27:12.789217)inode3315:3.408888)inode3301:4.643113)inode3297:0.916711)inode3284:0.595647)inode3241:2.169229)inode3217:18.303796)inode3123:18.533589,((((28:8.848593,29:8.848593)inode3496:13.899039,((30:11.749989,31:11.749989)inode3502:4.958667,(32:4.900502,33:4.900502)inode3509:11.808154)inode3501:6.038976)inode3495:13.61266,((34:6.146788,35:6.146788)inode3525:29.318958,(36:34.498364,37:34.498364)inode3538:0.967382)inode3513:0.894546)inode3490:16.607717,((38:34.892019,(39:33.307542,(40:32.305487,41:32.305487)inode3769:1.002055)inode3732:1.584477)inode3714:13.793181,(42:37.465832,(43:34.654548,(44:31.038139,45:31.038139)inode4086:3.616409)inode4032:2.811284)inode3970:11.219368)inode3631:4.282809)inode3351:8.392181)inode3122;
 END;
