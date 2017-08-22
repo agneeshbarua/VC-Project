@@ -4,7 +4,7 @@ Bitis_gabonica,0,0.016,0,0.067,0.032,0,0.05,0.05,0.3,0.13,0.645,0.348,0.993,120,
 Boiga_irregularis,0.659,0,0.0383,0.015,0.004,0,0,0.004,0.248,0,0.9683,0.0227,0.991,270,Colubridae,Boiginae
 Bothriechis_lateralis,0.016,0.236,0.032,0.031,0.018,0.033,0.034,0.03,0.449,0.104,0.983,0.0159,0.9989,90,Viperidae,Crotalinae
 Bothriechis_schlegelii,0.036,0.153,0.036,0.002,0.049,0.116,0.032,0.1,0.263,0.203,0.99,0.0088,0.9988,55,Viperidae,Crotalinae
-Bothrops_alternatus,0,0.118,0.022,0.165,0.025,0,0.018,0.01,0.585,0.051,0.994,,0.994,100,Viperidae,Colubroidea
+Bothrops_alternatus,0,0.118,0.022,0.165,0.025,0,0.018,0.014,0.585,0.051,0.994,,0.998,100,Viperidae,Colubroidea
 Bothrops_asper,0.008,0.15,0.008,0.012,0.009,0.028,0.042,0.18,0.416,0.134,0.987,0.013,1,150,Viperidae,Crotalinae
 Bothrops_atrox,0,0.071,0.005,0.048,0.01,0,0.014,0.146,0.616,0.082,0.992,0.005,0.997,100,Viperidae,Crotalinae
 Bothrops_colombiensis,0,0.01,0.02,0.04,0.02,0,0.02,0.3,0.37,0.12,0.9,0.1,1,100,Viperidae,Crotalinae
