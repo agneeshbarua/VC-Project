@@ -1,0 +1,74 @@
+---
+title: "Surface Analysis"
+author: "Agneesh Barua"
+date: "10/09/2017"
+output: html_document
+---
+
+```{r}
+library(surface)
+data("surfaceDemo")
+
+#Preparing data
+dat <- read.csv("./Data csv/New data/surfacedata.csv", row.names = 1)
+tree <- read.nexus("MinSnake_tree_u.nex")
+
+
+tree <-nameNodes(tree)
+olist <-convertTreeData(tree,dat)
+otree <-olist[[1]]; odata<-olist[[2]]
+```
+
+```{r}
+#Analysis
+fwd <- surfaceForward(otree, odata, aic_threshold = 0, exclude = 0, verbose = F, plotaic = F)
+
+k<-length(fwd)
+
+fsum <-surfaceSummary(fwd)
+names(fsum)
+
+fsum$aics
+
+bwd <- surfaceBackward(otree, odata, starting_model = fwd[[k]], aic_threshold = 0, only_best = T,verbose = F,plotaic = F)
+
+bsum<- surfaceSummary(bwd)
+ kk<-length(bwd)
+ 
+ bsum$alpha
+ bsum$sigma_squared
+ bsum$theta
+ bsum$n_regimes
+ 
+ surfaceTreePlot(tree, bwd[[kk]], labelshifts = T)
+    
+ par(mfrow =c(1,2),mai=c(0.8,0.8,0.2,0.2))
+ surfaceTraitPlot(dat, bwd[[kk]],whattraits = c(1,2))
+ surfaceTraitPlot(dat, bwd[[kk]],whattraits = c(2,3))
+ surfaceTraitPlot(dat, bwd[[kk]],whattraits = c(3,4))
+ surfaceTraitPlot(dat, bwd[[kk]],whattraits = c(1,2))
+ surfaceTraitPlot(dat, bwd[[kk]],whattraits = c(1,4))
+ 
+```
+
+```{r}
+#simulating data
+ 
+set.seed(10)
+newsim<- surfaceSimulate(tree, type = "hansen-fit", hansenfit = fwd[[k]]$fit, shifts = fwd[[k]]$savedshifts, sample_optima = T)
+par(mfrow =c(1,2),mai=c(0.8,0.8,0.2,0.2))
+surfaceTraitPlot(newsim$data, newsim, whattraits = c(1,2), convcol = F)
+surfaceTraitPlot(newsim$data, newsim, whattraits = c(3,4), convcol = F)
+
+
+newout<-runSurface(tree, newsim$data, only_best = T)
+newsum<-surfaceSummary(newout$bwd)
+newkk<-length(newout$bwd)
+newsum$n_regimes
+bsum$n_regimes
+
+par(mfrow =c(1,2),mai=c(0.8,0.8,0.2,0.2))
+surfaceTraitPlot(newsim$data, newout$bwd[[newkk]], whattraits = c(1,2))
+surfaceTraitPlot(newsim$data, newout$bwd[[newkk]], whattraits = c(3,4))
+
+```
