@@ -3,9 +3,6 @@ library(surface)
 dat <- read.csv("./Data csv/New data/surfacedata.csv", row.names = 1)
 tree <- read.nexus("MinSnake_tree_u.nex")
 
-plot(tree)
-
-
 tree <-nameNodes(tree)
 olist <-convertTreeData(tree,dat)
 otree <-olist[[1]]; odata<-olist[[2]]
@@ -49,33 +46,31 @@ bsum<- surfaceSummary(bwd)
 
  
  
-#simulating data
- 
+#Simulating data
+
+#Basic simulation
 newsim<- surfaceSimulate(tree, type = "hansen-fit", hansenfit = fwd[[k]]$fit, shifts = fwd[[k]]$savedshifts, sample_optima = T)
 par(mfrow =c(1,2),mai=c(0.8,0.8,0.2,0.2))
 surfaceTraitPlot(newsim$data, newsim, whattraits = c(1,2), convcol = F)
 surfaceTraitPlot(newsim$data, newsim, whattraits = c(3,4), convcol = F)
 
-
+#Using output of Basic simulation
 newout<-runSurface(tree, newsim$data, only_best = T)
 newsimres<-newsim$data
 newsum<-surfaceSummary(newout$bwd)
 newsum$n_regimes
 bsum$n_regimes
 
-
+#Loop simulation
 result<-replicate(10, surfaceSimulate(tree, type = "hansen-fit", hansenfit = fwd[[k]]$fit, shifts = fwd[[k]]$savedshifts, sample_optima = T))
 result[1,]
 resultsim <-as.list.data.frame(result[1,])
 resultsim
 
-
-runsurf<-runSurface(tree, resultsim, only_best = T)
-runsum<-surfaceSummary(runsurf$bwd)
-runsum$n_regimes_seq
-
+#Backward analysis with Loop simulation output
 sim<-lapply(resultsim, runSurface, tree= read.nexus("MinSnake_tree_u.nex"), only_best=T)
 
+#Obtaining output from sim. #Need to write cleaner code.
 surfsum1<-surfaceSummary(sim[[1]]$bwd)
 surfsum2<-surfaceSummary(sim[[2]]$bwd)
 surfsum3<-surfaceSummary(sim[[3]]$bwd)
@@ -89,8 +84,4 @@ surfsum7$n_regimes
 
 
 
-
-par(mfrow =c(1,2),mai=c(0.8,0.8,0.2,0.2))
-surfaceTraitPlot(newsim$data, newout$bwd[[newkk]], whattraits = c(1,2))
-surfaceTraitPlot(newsim$data, newout$bwd[[newkk]], whattraits = c(3,4))
 
