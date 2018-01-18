@@ -27,7 +27,7 @@ inv.phylo = inverseA(snphylo, nodes = "TIPS", scale =TRUE)
 ```{r mcmc message=FALSE}
 priors1 <- list(G=list(G1=list(V=diag(10), nu=0.002)), R=list(V=diag(10), nu= 0.002)) # standard prior
 ptm <- proc.time()
-cov_model<-MCMCglmm(cbind(TFTx,BPP,CRISP,CTL,GF,OHA,LAAO,PLA2,SVMP,SVSP) ~ cm, 
+cov_model<-MCMCglmm(cbind(TFTx,BPP,CRISP,CTL,GF,OHA,LAAO,PLA2,SVMP,SVSP) ~ trait:cm -1, 
                        random = ~us(trait):species,
                        rcov = ~us(trait):units,
                   family=rep("gaussian",10), 
