@@ -121,3 +121,5 @@ http://grokbase.com/t/r/r-sig-phylo/1382dqfaqr/wg-re-aw-re-mcmcglmm-for-categori
 [R and G structures](https://stats.stackexchange.com/questions/32994/what-are-r-structure-g-structure-in-a-glmm)
 
 [Diagnostics, etc.](https://ms.mcmaster.ca/~bolker/R/misc/foxchapter/bolker_chap.html)
+
+Multi-response models: https://cran.r-project.org/web/packages/MCMCglmm/vignettes/Overview.pdf 
