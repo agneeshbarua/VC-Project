@@ -1,37 +1,12 @@
-## Welcome to GitHub Pages
+# Venom Components Project
+## Agneesh Barua and Alexander Mikheyev
 
-You can use the [editor on GitHub](https://github.com/agneeshbarua/VC-Project/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+This repo contains code and data used in the VC project. 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Description:
+Suites of genes underlie most phenotypes. Changes in these quantitative phenotypes can occur through changes in coding sequence, but more importantly occur through changes in gene expression. The relevance of gene expression change in phenotypic change has been established in a wide variety of organisms. However, what is still unclear is how changes in gene expression lead to evolution of a complex trait through deep time. 
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Snake venom is a combination of different proteins where the expression of each toxin can be traced and quantified to a specific genomic locus. The expression of each toxin alters its relative abundance in the venom inluencing the efficacy of the venom. Thus, we classify the toxin levels as the polygenic phentype that is snake venom. Drawing analogies from quantitative genetics, we model the effect of phylogeny on gene expression levels between different toxin genes in snake venom. This gives us a picture of how evolution has impacted relationships between toxin expression levels, which in turn effects how the snake venom phenotype is shaped. This project uses comparative transcriptomic data from 45 different snake species. We provide the first comprehensive look into snake venom evolution by combining quntitative, comparative, and phylogenetic concepts under a unified framework. This has allowed us to disucss a novel model snake venom evolution. 
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/agneeshbarua/VC-Project/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Stay tuned for updates about the manuscipt, which is presently under preparation.
